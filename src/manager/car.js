@@ -1,10 +1,7 @@
 import { prisma } from "../config/db.js";
+import { fetchCarImage } from "../services/scraper_services.js";
 
-async function addCar(user, make, model, year, vin, licensePlate, color, currentMileage, mileageUnit, purchaseDate, purchasePrice, purchaseMileage, img) {
-    
-    console.log("tester")
-    console.log(typeof(vin))
-
+async function addCar(user, make, model, year, vin, licensePlate, color, currentMileage, mileageUnit, purchaseDate, purchasePrice, purchaseMileage) {
     if (!user) {
         throw new Error("Unauthorized");
     }
@@ -39,6 +36,8 @@ async function addCar(user, make, model, year, vin, licensePlate, color, current
     if (yearNum > currentYear) {
         throw new Error('Year cannot be in the future');
     }
+
+    const img = await fetchCarImage(make, model, year)
 
     const carData = {
         userId: user.id,
@@ -135,6 +134,10 @@ async function updateCarDetails(user, id, make, model, year, vin, licensePlate, 
         throw new Error('Year cannot be in the future');
     }
 
+    const img = await fetchCarImage(make, model, year)
+
+    console.log(img)
+
     const carData = {
         userId: user.id,
         make: capitaliseWords(make) ?? carFound.make,
@@ -148,6 +151,7 @@ async function updateCarDetails(user, id, make, model, year, vin, licensePlate, 
         purchaseDate: purchaseDate ? new Date(purchaseDate) : carFound.purchaseDate,
         purchasePrice: Number(purchasePrice) ?? carFound.purchasePrice,
         purchaseMileage: Number(purchaseMileage) ?? carFound.purchaseMileage,
+        img
     };
 
     const car = await prisma.car.update({
