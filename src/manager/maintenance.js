@@ -12,7 +12,7 @@ const maintenanceData = JSON.parse(
     )
 );
 
-async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost) {
+async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost, status) {
 
     const exsits = await prisma.maintenanceRecord.findUnique({
         where: {
@@ -24,7 +24,11 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost)
     });
 
     if (exsits) {
-        throw new Error("This service has already been completed");
+        return "This service has already been completed";
+    }
+    console.log(status)
+    if (status !== "COMPLETED" && status !== "SCHEDULED" && status !== "SKIPPED") {
+        throw new Error("Invalid status");
     }
 
     const mileageData = maintenanceData.maintenanceSchedule.mileageIntervals[mileage].services;
@@ -46,7 +50,7 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost)
                 estimatedCostMin: serviceData.estimatedCost.min,
                 estimatedCostMax: serviceData.estimatedCost.max,
                 serviceDate: new Date(),
-                status: "COMPLETED"
+                status: status
             }
 
             data = await prisma.maintenanceRecord.create({
@@ -68,7 +72,40 @@ async function getMaintenanceInfoForStatus(carId) {
     return exsits
 }
 
-
-
-
 export { addToMaintenance, getMaintenanceInfoForStatus }
+async function findServices(carId, currMileage) {
+    let servicesDue = {};
+
+    const mileageIntervals = maintenanceData.maintenanceSchedule.mileageIntervals;
+
+    for (const [mileage, interval] of Object.entries(mileageIntervals)) {
+
+        for (const service of interval.services) {
+            const exists = await prisma.maintenanceRecord.findUnique({
+                where: {
+                    serviceId_scheduledMileage: {
+                        serviceId: service.id,
+                        scheduledMileage: Number(mileage)
+                    },
+                    carId: carId
+                }
+            });
+
+            if (Number(mileage) <= currMileage && !exists) {
+                if (!servicesDue[mileage]) {
+                    servicesDue[mileage] = [];
+                }
+
+                console.log(service)
+
+                servicesDue[mileage].push(service.id);
+            }
+        }
+
+    }
+
+    return servicesDue;
+}
+
+
+export { addToMaintenance, getMaintenanceInfoForStatus, findServices }
