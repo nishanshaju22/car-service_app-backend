@@ -1,10 +1,10 @@
 import { addToMaintenance, findServices } from "../manager/maintenance.js";
 
 async function addToMaintenanceController(req, res) {
-    const { carId, servId, mileage, mileageServicedAt, cost } = req.body;
+    const { carId, servId, mileage, mileageServicedAt, cost, status } = req.body;
 
     try {
-        const result = await addToMaintenance(carId, servId, mileage, mileageServicedAt, cost);
+        const result = await addToMaintenance(carId, servId, mileage, mileageServicedAt, cost, status);
         return res.status(201).json(result);
     } catch (error) {
         return res.status(400).json({ error: error.message });
@@ -23,4 +23,4 @@ async function findServicesController(req, res) {
     }
 }
 
-export { addToMaintenanceController, findServicesController };``
+export { addToMaintenanceController, findServicesController };
