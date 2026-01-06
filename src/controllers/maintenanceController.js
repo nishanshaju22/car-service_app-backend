@@ -1,4 +1,4 @@
-import { addToMaintenance } from "../manager/maintenance.js";
+import { addToMaintenance, getMaintenanceInfoForStatus } from "../manager/maintenance.js";
 
 async function addToMaintenanceController(req, res) {
     const { carId, servId, mileage, mileageServicedAt, cost } = req.body;
@@ -11,48 +11,15 @@ async function addToMaintenanceController(req, res) {
     }
 }
 
-// async function loginController(req, res) {
-//     const {email, password} = req.body;
+async function getMaintenanceInfoForStatusController(req, res) {
+    const carId = req.query.carId;
 
-//     try {
-//         const result = await login(email, password, res);
-//         return res.status(201).json(result);
-//     } catch (error) {
-//         return res.status(400).json({ error: error.message });
-//     }
-// }
+    try {
+        const result = await getMaintenanceInfoForStatus(carId);
+        return res.status(201).json(result);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+}
 
-// async function logoutController(req, res) {
-//     res.cookie("jwt", "", {
-//         httpOnly: true,
-//         expires: new Date(0)
-//     });
-//     res.status(200).json({
-//         status: "success",
-//         message: "Logged out successfully"
-//     });
-// }
-
-// async function removeUserController(req, res) {
-//     try {
-//         const result = await deleteUser(req.user);
-//         return res.status(201).json(result);
-//     } catch (error) {
-//         return res.status(400).json({ error: error.message });
-//     }
-// }
-
-// async function updateUserDetailsController(req, res) {
-    
-//     const {email, password, name} = req.body
-    
-//     try {
-//         const result = await updateUserDetails(req.user, email, password, name);
-//         return res.status(201).json(result);
-//     } catch (error) {
-//         return res.status(400).json({ error: error.message });
-//     }
-
-// }
-
-export { addToMaintenanceController };
+export { addToMaintenanceController, getMaintenanceInfoForStatusController };

@@ -58,7 +58,17 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost)
     return data;
 }
 
+async function getMaintenanceInfoForStatus(carId) {
+    const exsits = await prisma.maintenanceRecord.findMany({
+        where: {
+            carId: carId
+        }
+    });
+
+    return exsits
+}
 
 
 
-export { addToMaintenance }
+
+export { addToMaintenance, getMaintenanceInfoForStatus }
