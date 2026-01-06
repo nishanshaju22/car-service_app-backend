@@ -26,7 +26,7 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost,
     if (exsits) {
         return "This service has already been completed";
     }
-    console.log(status)
+
     if (status !== "COMPLETED" && status !== "SCHEDULED" && status !== "SKIPPED") {
         throw new Error("Invalid status");
     }
@@ -72,36 +72,40 @@ async function getMaintenanceInfoForStatus(carId) {
     return exsits
 }
 
-export { addToMaintenance, getMaintenanceInfoForStatus }
 async function findServices(carId, currMileage) {
     let servicesDue = {};
+
+    const car = await prisma.car.findUnique({
+        where: {
+            id: carId
+        }
+    })
+
+    if (!car) {
+        throw new Error(`Car with id ${carId} does not exist`)
+    }
 
     const mileageIntervals = maintenanceData.maintenanceSchedule.mileageIntervals;
 
     for (const [mileage, interval] of Object.entries(mileageIntervals)) {
+        const mileageInt = Number(mileage);
+
+        if (mileageInt > currMileage) continue;
 
         for (const service of interval.services) {
-            const exists = await prisma.maintenanceRecord.findUnique({
+            const exists = await prisma.maintenanceRecord.findFirst({
                 where: {
-                    serviceId_scheduledMileage: {
-                        serviceId: service.id,
-                        scheduledMileage: Number(mileage)
-                    },
-                    carId: carId
+                    carId: carId,
+                    serviceId: service.id,
+                    scheduledMileage: mileageInt
                 }
             });
 
-            if (Number(mileage) <= currMileage && !exists) {
-                if (!servicesDue[mileage]) {
-                    servicesDue[mileage] = [];
-                }
-
-                console.log(service)
-
-                servicesDue[mileage].push(service.id);
+            if (!exists) {
+                servicesDue[mileageInt] ??= [];
+                servicesDue[mileageInt].push(service);
             }
         }
-
     }
 
     return servicesDue;
