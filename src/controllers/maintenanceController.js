@@ -16,17 +16,18 @@ async function getMaintenanceInfoForStatusController(req, res) {
 
     try {
         const result = await getMaintenanceInfoForStatus(carId);
+        return res.status(201).json(result);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
 }
 
 async function findServicesController(req, res) {
-    const carId = req.query.carId;
+    const id = req.query.id;
     const currMileage = req.query.currMileage;
 
     try {
-        const result = await findServices(carId, currMileage);
+        const result = await findServices(id, currMileage);
         return res.status(201).json(result);
     } catch (error) {
         return res.status(400).json({ error: error.message });

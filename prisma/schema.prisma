@@ -76,7 +76,7 @@ model MaintenanceRecord {
     estimatedCostMax      Float?
     
     mileageAtService      Int
-    scheduledMileage      Int?
+    scheduledMileage      Int
     
     serviceDate           DateTime  @default(now())
     scheduledDays         Int?
