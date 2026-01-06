@@ -1,0 +1,676 @@
+{
+    "maintenanceSchedule": {
+        "version": "1.0",
+        "lastUpdated": "2025-01-05",
+        "description": "Generic vehicle maintenance schedule based on industry standards",
+        "unit": "kilometers",
+        "mileageIntervals": {
+            "5000": {
+                "kilometers": 5000,
+                "miles": 3000,
+                "daysSinceManufacture": null,
+                "services": [
+                    {
+                        "id": "oil_change_conventional",
+                        "name": "Engine Oil Change (Conventional)",
+                        "category": "fluids",
+                        "priority": "critical",
+                        "description": "Replace engine oil with conventional oil",
+                        "estimatedCost": {
+                            "min": 30,
+                            "max": 75
+                        }
+                    },
+                    {
+                        "id": "oil_filter",
+                        "name": "Oil Filter Replacement",
+                        "category": "filters",
+                        "priority": "critical",
+                        "description": "Replace oil filter",
+                        "estimatedCost": {
+                            "min": 10,
+                            "max": 25
+                        }
+                    }
+                ]
+            },
+            "8000": {
+                "kilometers": 8000,
+                "miles": 5000,
+                "daysSinceManufacture": 180,
+                "services": [
+                    {
+                        "id": "tire_rotation",
+                        "name": "Tire Rotation",
+                        "category": "tires",
+                        "priority": "recommended",
+                        "description": "Rotate tires to ensure even wear",
+                        "estimatedCost": {
+                            "min": 20,
+                            "max": 50
+                        }
+                    },
+                    {
+                        "id": "fluid_level_check",
+                        "name": "Fluid Level Check",
+                        "category": "inspection",
+                        "priority": "recommended",
+                        "description": "Check all fluid levels (coolant, brake, power steering, windshield washer)",
+                        "estimatedCost": {
+                            "min": 0,
+                            "max": 25
+                        }
+                    },
+                    {
+                        "id": "tire_pressure_check",
+                        "name": "Tire Pressure Check",
+                        "category": "tires",
+                        "priority": "recommended",
+                        "description": "Check and adjust tire pressure to manufacturer specifications",
+                        "estimatedCost": {
+                            "min": 0,
+                            "max": 10
+                        }
+                    }
+                ]
+            },
+            "12000": {
+                "kilometers": 12000,
+                "miles": 7500,
+                "daysSinceManufacture": 180,
+                "services": [
+                    {
+                        "id": "oil_change_synthetic",
+                        "name": "Engine Oil Change (Synthetic)",
+                        "category": "fluids",
+                        "priority": "critical",
+                        "description": "Replace engine oil with synthetic oil",
+                        "estimatedCost": {
+                            "min": 50,
+                            "max": 125
+                        }
+                    },
+                    {
+                        "id": "oil_filter",
+                        "name": "Oil Filter Replacement",
+                        "category": "filters",
+                        "priority": "critical",
+                        "description": "Replace oil filter",
+                        "estimatedCost": {
+                            "min": 10,
+                            "max": 25
+                        }
+                    }
+                ]
+            },
+            "16000": {
+                "kilometers": 16000,
+                "miles": 10000,
+                "daysSinceManufacture": null,
+                "services": [
+                    {
+                        "id": "brake_inspection",
+                        "name": "Brake System Inspection",
+                        "category": "brakes",
+                        "priority": "recommended",
+                        "description": "Inspect brake pads, rotors, and brake system components",
+                        "estimatedCost": {
+                            "min": 20,
+                            "max": 50
+                        }
+                    },
+                    {
+                        "id": "wheel_alignment_check",
+                        "name": "Wheel Alignment Check",
+                        "category": "tires",
+                        "priority": "optional",
+                        "description": "Check wheel alignment and adjust if necessary",
+                        "estimatedCost": {
+                            "min": 75,
+                            "max": 150
+                        }
+                    }
+                ]
+            },
+            "24000": {
+                "kilometers": 24000,
+                "miles": 15000,
+                "daysSinceManufacture": 365,
+                "services": [
+                    {
+                        "id": "air_filter",
+                        "name": "Engine Air Filter Replacement",
+                        "category": "filters",
+                        "priority": "recommended",
+                        "description": "Replace engine air filter",
+                        "estimatedCost": {
+                            "min": 15,
+                            "max": 40
+                        }
+                    },
+                    {
+                        "id": "cabin_air_filter",
+                        "name": "Cabin Air Filter Replacement",
+                        "category": "filters",
+                        "priority": "recommended",
+                        "description": "Replace cabin air filter",
+                        "estimatedCost": {
+                            "min": 15,
+                            "max": 50
+                        }
+                    },
+                    {
+                        "id": "battery_check",
+                        "name": "Battery Inspection",
+                        "category": "electrical",
+                        "priority": "recommended",
+                        "description": "Check battery condition and clean terminals",
+                        "estimatedCost": {
+                            "min": 0,
+                            "max": 25
+                        }
+                    }
+                ]
+            },
+            "48000": {
+                "kilometers": 48000,
+                "miles": 30000,
+                "daysSinceManufacture": 730,
+                "services": [
+                    {
+                        "id": "coolant_flush",
+                        "name": "Coolant System Flush",
+                        "category": "fluids",
+                        "priority": "recommended",
+                        "description": "Flush and replace coolant/antifreeze",
+                        "estimatedCost": {
+                            "min": 100,
+                            "max": 150
+                        }
+                    },
+                    {
+                        "id": "brake_fluid_replacement",
+                        "name": "Brake Fluid Replacement",
+                        "category": "fluids",
+                        "priority": "recommended",
+                        "description": "Flush and replace brake fluid",
+                        "estimatedCost": {
+                            "min": 70,
+                            "max": 125
+                        }
+                    },
+                    {
+                        "id": "fuel_filter",
+                        "name": "Fuel Filter Replacement",
+                        "category": "filters",
+                        "priority": "recommended",
+                        "description": "Replace fuel filter (if applicable)",
+                        "estimatedCost": {
+                            "min": 50,
+                            "max": 150
+                        }
+                    },
+                    {
+                        "id": "transmission_fluid_check",
+                        "name": "Transmission Fluid Check",
+                        "category": "fluids",
+                        "priority": "recommended",
+                        "description": "Check transmission fluid level and condition",
+                        "estimatedCost": {
+                            "min": 0,
+                            "max": 40
+                        }
+                    },
+                    {
+                        "id": "belt_inspection",
+                        "name": "Belt Inspection",
+                        "category": "inspection",
+                        "priority": "recommended",
+                        "description": "Inspect serpentine belt and other drive belts",
+                        "estimatedCost": {
+                            "min": 20,
+                            "max": 50
+                        }
+                    },
+                    {
+                        "id": "spark_plugs_conventional",
+                        "name": "Spark Plug Replacement (Conventional)",
+                        "category": "ignition",
+                        "priority": "recommended",
+                        "description": "Replace conventional spark plugs",
+                        "estimatedCost": {
+                            "min": 100,
+                            "max": 250
+                        }
+                    }
+                ]
+            },
+            "80000": {
+                "kilometers": 80000,
+                "miles": 50000,
+                "daysSinceManufacture": null,
+                "services": [
+                    {
+                        "id": "power_steering_fluid",
+                        "name": "Power Steering Fluid Replacement",
+                        "category": "fluids",
+                        "priority": "optional",
+                        "description": "Replace power steering fluid",
+                        "estimatedCost": {
+                            "min": 60,
+                            "max": 100
+                        }
+                    },
+                    {
+                        "id": "brake_rotor_inspection",
+                        "name": "Brake Rotor Inspection",
+                        "category": "brakes",
+                        "priority": "recommended",
+                        "description": "Inspect brake rotors for wear and damage",
+                        "estimatedCost": {
+                            "min": 20,
+                            "max": 50
+                        }
+                    }
+                ]
+            },
+            "96000": {
+                "kilometers": 96000,
+                "miles": 60000,
+                "daysSinceManufacture": 1460,
+                "services": [
+                    {
+                        "id": "transmission_fluid_replacement",
+                        "name": "Transmission Fluid Replacement",
+                        "category": "fluids",
+                        "priority": "recommended",
+                        "description": "Replace transmission fluid",
+                        "estimatedCost": {
+                            "min": 150,
+                            "max": 300
+                        }
+                    },
+                    {
+                        "id": "serpentine_belt",
+                        "name": "Serpentine Belt Replacement",
+                        "category": "belts",
+                        "priority": "recommended",
+                        "description": "Replace serpentine/drive belt",
+                        "estimatedCost": {
+                            "min": 75,
+                            "max": 200
+                        }
+                    },
+                    {
+                        "id": "spark_plugs_long_life",
+                        "name": "Spark Plug Replacement (Long-Life)",
+                        "category": "ignition",
+                        "priority": "recommended",
+                        "description": "Replace long-life (iridium/platinum) spark plugs",
+                        "estimatedCost": {
+                            "min": 150,
+                            "max": 350
+                        }
+                    },
+                    {
+                        "id": "timing_belt_inspection",
+                        "name": "Timing Belt Inspection",
+                        "category": "belts",
+                        "priority": "critical",
+                        "description": "Inspect timing belt (if applicable)",
+                        "estimatedCost": {
+                            "min": 50,
+                            "max": 100
+                        }
+                    }
+                ]
+            },
+            "145000": {
+                "kilometers": 145000,
+                "miles": 90000,
+                "daysSinceManufacture": null,
+                "services": [
+                    {
+                        "id": "hose_inspection",
+                        "name": "Hose Inspection",
+                        "category": "inspection",
+                        "priority": "recommended",
+                        "description": "Inspect all hoses for cracks and leaks",
+                        "estimatedCost": {
+                            "min": 20,
+                            "max": 50
+                        }
+                    },
+                    {
+                        "id": "suspension_inspection",
+                        "name": "Suspension System Inspection",
+                        "category": "inspection",
+                        "priority": "recommended",
+                        "description": "Inspect shocks, struts, and suspension components",
+                        "estimatedCost": {
+                            "min": 40,
+                            "max": 100
+                        }
+                    }
+                ]
+            },
+            "160000": {
+                "kilometers": 160000,
+                "miles": 100000,
+                "daysSinceManufacture": null,
+                "services": [
+                    {
+                        "id": "timing_belt_replacement",
+                        "name": "Timing Belt Replacement",
+                        "category": "belts",
+                        "priority": "critical",
+                        "description": "Replace timing belt (if applicable - critical for interference engines)",
+                        "estimatedCost": {
+                            "min": 500,
+                            "max": 1000
+                        }
+                    },
+                    {
+                        "id": "water_pump",
+                        "name": "Water Pump Replacement",
+                        "category": "cooling",
+                        "priority": "recommended",
+                        "description": "Replace water pump (often done with timing belt)",
+                        "estimatedCost": {
+                            "min": 300,
+                            "max": 750
+                        }
+                    },
+                    {
+                        "id": "transmission_fluid_replacement_auto",
+                        "name": "Automatic Transmission Fluid Replacement",
+                        "category": "fluids",
+                        "priority": "recommended",
+                        "description": "Replace automatic transmission fluid (if not done at 60k)",
+                        "estimatedCost": {
+                            "min": 150,
+                            "max": 300
+                        }
+                    }
+                ]
+            }
+        },
+        "timeBasedIntervals": {
+            "monthly": [
+                {
+                    "id": "coolant_level_check",
+                    "name": "Coolant Level Check",
+                    "category": "fluids",
+                    "priority": "recommended",
+                    "description": "Check coolant level and top off if needed",
+                    "estimatedCost": {
+                        "min": 0,
+                        "max": 10
+                    }
+                },
+                {
+                    "id": "tire_pressure_monthly",
+                    "name": "Tire Pressure Check",
+                    "category": "tires",
+                    "priority": "recommended",
+                    "description": "Check tire pressure monthly",
+                    "estimatedCost": {
+                        "min": 0,
+                        "max": 0
+                    }
+                }
+            ],
+            "every_180_days": [
+                {
+                    "id": "oil_change_time_based",
+                    "name": "Engine Oil Change (Time-Based)",
+                    "category": "fluids",
+                    "priority": "critical",
+                    "description": "Change oil even if mileage interval not reached",
+                    "daysSinceManufacture": 180,
+                    "estimatedCost": {
+                        "min": 30,
+                        "max": 125
+                    }
+                },
+                {
+                    "id": "battery_terminals",
+                    "name": "Battery Terminal Cleaning",
+                    "category": "electrical",
+                    "priority": "recommended",
+                    "description": "Clean and check battery terminals",
+                    "daysSinceManufacture": 180,
+                    "estimatedCost": {
+                        "min": 0,
+                        "max": 25
+                    }
+                },
+                {
+                    "id": "tire_rotation_time",
+                    "name": "Tire Rotation (Time-Based)",
+                    "category": "tires",
+                    "priority": "recommended",
+                    "description": "Rotate tires every 6 months if mileage interval not reached",
+                    "daysSinceManufacture": 180,
+                    "estimatedCost": {
+                        "min": 20,
+                        "max": 50
+                    }
+                }
+            ],
+            "every_365_days": [
+                {
+                    "id": "comprehensive_inspection",
+                    "name": "Comprehensive Vehicle Inspection",
+                    "category": "inspection",
+                    "priority": "recommended",
+                    "description": "Complete multi-point inspection of vehicle systems",
+                    "daysSinceManufacture": 365,
+                    "estimatedCost": {
+                        "min": 50,
+                        "max": 150
+                    }
+                },
+                {
+                    "id": "air_filter_annual",
+                    "name": "Air Filter Check",
+                    "category": "filters",
+                    "priority": "recommended",
+                    "description": "Check and replace air filters if needed",
+                    "daysSinceManufacture": 365,
+                    "estimatedCost": {
+                        "min": 15,
+                        "max": 50
+                    }
+                },
+                {
+                    "id": "wheel_alignment_annual",
+                    "name": "Wheel Alignment Check",
+                    "category": "tires",
+                    "priority": "optional",
+                    "description": "Annual wheel alignment check",
+                    "daysSinceManufacture": 365,
+                    "estimatedCost": {
+                        "min": 75,
+                        "max": 150
+                    }
+                }
+            ],
+            "every_730_days": [
+                {
+                    "id": "coolant_time_based",
+                    "name": "Coolant Replacement (Time-Based)",
+                    "category": "fluids",
+                    "priority": "recommended",
+                    "description": "Replace coolant every 2-3 years regardless of mileage",
+                    "daysSinceManufacture": 730,
+                    "estimatedCost": {
+                        "min": 100,
+                        "max": 150
+                    }
+                },
+                {
+                    "id": "brake_fluid_time_based",
+                    "name": "Brake Fluid Replacement (Time-Based)",
+                    "category": "fluids",
+                    "priority": "recommended",
+                    "description": "Replace brake fluid every 2-3 years",
+                    "daysSinceManufacture": 730,
+                    "estimatedCost": {
+                        "min": 70,
+                        "max": 125
+                    }
+                }
+            ],
+            "every_1095_days": [
+                {
+                    "id": "battery_replacement",
+                    "name": "Battery Replacement",
+                    "category": "electrical",
+                    "priority": "recommended",
+                    "description": "Replace battery every 3-5 years",
+                    "daysSinceManufacture": 1095,
+                    "estimatedCost": {
+                        "min": 100,
+                        "max": 300
+                    }
+                }
+            ]
+        },
+        "wearBasedServices": [
+            {
+                "id": "brake_pads",
+                "name": "Brake Pad Replacement",
+                "category": "brakes",
+                "priority": "critical",
+                "description": "Replace when pad thickness is less than 3mm",
+                "typicalRange": {
+                    "min": 40000,
+                    "max": 112000
+                },
+                "estimatedCost": {
+                    "min": 150,
+                    "max": 400
+                }
+            },
+            {
+                "id": "brake_rotors",
+                "name": "Brake Rotor Replacement",
+                "category": "brakes",
+                "priority": "critical",
+                "description": "Resurface or replace when worn or warped",
+                "typicalRange": {
+                    "min": 80000,
+                    "max": 112000
+                },
+                "estimatedCost": {
+                    "min": 200,
+                    "max": 500
+                }
+            },
+            {
+                "id": "tires",
+                "name": "Tire Replacement",
+                "category": "tires",
+                "priority": "critical",
+                "description": "Replace when tread depth is less than 2/32 inch",
+                "typicalRange": {
+                    "min": 64000,
+                    "max": 96000
+                },
+                "estimatedCost": {
+                    "min": 400,
+                    "max": 1200
+                }
+            },
+            {
+                "id": "wiper_blades",
+                "name": "Wiper Blade Replacement",
+                "category": "maintenance",
+                "priority": "optional",
+                "description": "Replace when streaking or not clearing properly",
+                "typicalRange": {
+                    "min": 180,
+                    "max": 365
+                },
+                "rangeUnit": "days",
+                "estimatedCost": {
+                    "min": 15,
+                    "max": 50
+                }
+            }
+        ],
+        "categories": [
+            {
+                "id": "fluids",
+                "name": "Fluids",
+                "icon": "droplet"
+            },
+            {
+                "id": "filters",
+                "name": "Filters",
+                "icon": "filter"
+            },
+            {
+                "id": "tires",
+                "name": "Tires",
+                "icon": "circle"
+            },
+            {
+                "id": "brakes",
+                "name": "Brakes",
+                "icon": "disc"
+            },
+            {
+                "id": "electrical",
+                "name": "Electrical",
+                "icon": "zap"
+            },
+            {
+                "id": "belts",
+                "name": "Belts & Hoses",
+                "icon": "link"
+            },
+            {
+                "id": "ignition",
+                "name": "Ignition",
+                "icon": "spark"
+            },
+            {
+                "id": "cooling",
+                "name": "Cooling System",
+                "icon": "thermometer"
+            },
+            {
+                "id": "inspection",
+                "name": "Inspection",
+                "icon": "search"
+            },
+            {
+                "id": "maintenance",
+                "name": "General Maintenance",
+                "icon": "wrench"
+            }
+        ],
+        "priorityLevels": [
+            {
+                "id": "critical",
+                "name": "Critical",
+                "description": "Essential for safety and vehicle operation",
+                "color": "#DC2626"
+            },
+            {
+                "id": "recommended",
+                "name": "Recommended",
+                "description": "Important for reliability and longevity",
+                "color": "#F59E0B"
+            },
+            {
+                "id": "optional",
+                "name": "Optional",
+                "description": "Beneficial but not urgent",
+                "color": "#10B981"
+            }
+        ]
+    }
+}
