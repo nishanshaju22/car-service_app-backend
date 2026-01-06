@@ -102,7 +102,7 @@ model MaintenanceRecord {
 
 enum serviceStatus {
     COMPLETED
-    w
+    SCHEDULED
     OVERDUE
     SKIPPED
 }
