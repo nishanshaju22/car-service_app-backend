@@ -72,7 +72,6 @@ async function getMaintenanceInfoForStatus(carId) {
     return exsits
 }
 
-export { addToMaintenance, getMaintenanceInfoForStatus }
 async function findServices(carId, currMileage) {
     let servicesDue = {};
 
