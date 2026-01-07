@@ -79,7 +79,7 @@ model MaintenanceRecord {
     scheduledMileage      Int
     
     serviceDate           DateTime  @default(now())
-    scheduledDays         Int?
+    scheduledDate         DateTime?
     
     partsReplaced         String?   @db.Text
     
@@ -97,7 +97,7 @@ model MaintenanceRecord {
     @@index([serviceId])
     @@index([status])
     @@index([isScheduled])
-    @@unique([serviceId, scheduledMileage])
+    @@unique([serviceId, scheduledMileage, carId])
 }
 
 enum serviceStatus {
