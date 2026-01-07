@@ -12,7 +12,7 @@ const maintenanceData = JSON.parse(
     )
 );
 
-async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost, status) {
+async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost, status, scheduledDate) {
 
     const exsits = await prisma.maintenanceRecord.findUnique({
         where: {
@@ -35,6 +35,10 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost,
     const mileageData = maintenanceData.maintenanceSchedule.mileageIntervals[mileage].services;
     let data = null;
 
+    if (scheduledDate) {
+        status = "SCHEDULED";
+    }
+
     for (let serviceData of mileageData) {
 
         if (serviceData.id === servId) {
@@ -45,12 +49,12 @@ async function addToMaintenance(carId, servId, mileage, mileageServicedAt, cost,
                 category: serviceData.category,
                 priority: serviceData.priority,
                 description: serviceData.description,
-                mileageAtService: Number(mileageServicedAt),
+                mileageAtService: Number(mileageServicedAt) || null,
                 scheduledMileage: Number(mileage),
-                serviceCost: cost,
+                serviceCost: cost || null,
                 estimatedCostMin: serviceData.estimatedCost.min,
                 estimatedCostMax: serviceData.estimatedCost.max,
-                serviceDate: new Date(),
+                scheduledDate: scheduledDate,
                 status: status
             }
 
