@@ -116,5 +116,26 @@ async function findServices(carId, currMileage) {
     return servicesDue;
 }
 
+async function getUpcommingMaintainance(currentMileage, amountToGet) {
+    const mileageIntervals = maintenanceData.maintenanceSchedule.mileageIntervals;
+    let upcomingService = []
+    let count = 0;
 
-export { addToMaintenance, getMaintenanceInfoForStatus, findServices }
+    for (let [mileage, interval] of Object.entries(mileageIntervals)) {
+        mileage = Number(mileage)
+
+        if (mileage > currentMileage) {
+            upcomingService.push(interval);
+            count += 1;
+
+            if (count >= amountToGet) {
+                break;
+            }
+        }
+    }
+    
+    return upcomingService;
+}
+
+
+export { addToMaintenance, getMaintenanceInfoForStatus, findServices, getUpcommingMaintainance }

@@ -1,4 +1,4 @@
-import { addToMaintenance, getMaintenanceInfoForStatus, findServices } from "../manager/maintenance.js";
+import { addToMaintenance, getMaintenanceInfoForStatus, findServices, getUpcommingMaintainance } from "../manager/maintenance.js";
 
 async function addToMaintenanceController(req, res) {
     const { carId, servId, mileage, mileageServicedAt, cost, status, scheduledDate } = req.body;
@@ -34,4 +34,16 @@ async function findServicesController(req, res) {
     }
 }
 
-export { addToMaintenanceController, getMaintenanceInfoForStatusController, findServicesController };
+async function getUpcommingMaintainanceController(req, res) {
+    const currMileage = req.query.currMileage;
+    const amount = req.query.amount;
+
+    try {
+        const result = await getUpcommingMaintainance(currMileage, amount);
+        return res.status(201).json(result);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+}
+
+export { addToMaintenanceController, getMaintenanceInfoForStatusController, findServicesController, getUpcommingMaintainanceController };
