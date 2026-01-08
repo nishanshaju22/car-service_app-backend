@@ -41,8 +41,8 @@ async function addCar(user, make, model, year, vin, licensePlate, color, current
 
     const carData = {
         userId: user.id,
-        make: capitaliseWords(make),
-        model: capitaliseWords(model),
+        make: capitaliseWords(make).trim(),
+        model: capitaliseWords(model).trim(),
         year: Number(year),
         vin,
         licensePlate: licensePlate.toUpperCase(),
@@ -175,6 +175,74 @@ async function getCarById(id) {
     return car;
 }
 
+async function getCarRatings(id) {
+    const car = await getCarById(id);
+
+    const make = car.make;
+    const model = car.model;
+    const year = car.year;
+
+    try {
+        let response = await fetch(`https://api.nhtsa.gov/SafetyRatings/modelyear/${year}/make/${make}/model/${model}`);
+
+        if (!response.ok) {
+            throw new Error('Api error');
+        }
+
+        let data = await response.json();
+        const vehicleId = data.Results[0].VehicleId;
+
+        response = await fetch(`https://api.nhtsa.gov/SafetyRatings/VehicleId/${vehicleId}`);
+
+        if (!response.ok) {
+            throw new Error('Api error');
+        }
+
+        data = await response.json();
+
+        return data.Results
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+}
+
+async function getCarRecalls(id) {
+    const car = await getCarById(id);
+
+    const make = car.make;
+    const model = car.model.split(' ')[0];
+    const year = car.year;
+
+    try {
+        const response = await fetch(`https://api.nhtsa.gov/recalls/recallsByVehicle?make=${make}&model=${model}&modelYear=${year}`);
+
+        const data = await response.json();
+
+        return data.results
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+}
+
+async function getCarComplaints(id) {
+    const car = await getCarById(id);
+
+    const make = car.make;
+    const model = car.model;
+    const year = car.year;
+
+    try {
+        const response = await fetch(`https://api.nhtsa.gov/complaints/complaintsByVehicle?make=${make}&model=${model}&modelYear=${year}`);
+        const data = await response.json();
+
+        return data
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+}
 
 
-export { addCar, removeCar, updateCarDetails, carDetails, getCarById }
+export { addCar, removeCar, updateCarDetails, carDetails, getCarById, getCarRatings, getCarRecalls, getCarComplaints }
