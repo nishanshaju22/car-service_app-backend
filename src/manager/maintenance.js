@@ -117,4 +117,31 @@ async function findServices(carId, currMileage) {
 }
 
 
-export { addToMaintenance, getMaintenanceInfoForStatus, findServices }
+async function changeStatus(carId, servId, mileage, status) {
+    
+    if (status !== "COMPLETED" && status !== "SCHEDULED" && status !== "SKIPPED") {
+        throw new Error("Invalid status");
+    }
+
+    const updateData = {
+        status: status
+    }
+
+    const result = await prisma.maintenanceRecord.update({
+        where: {
+            serviceId_scheduledMileage_carId: {
+                serviceId: servId,
+                scheduledMileage: mileage,
+                carId: carId
+            }
+        },
+
+        data: updateData
+    });
+
+
+    return result;
+}
+
+
+export { addToMaintenance, getMaintenanceInfoForStatus, findServices, changeStatus }
