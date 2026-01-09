@@ -162,8 +162,16 @@ async function updateCarDetails(user, id, make, model, year, vin, licensePlate, 
     return car;
 }
 
-async function carDetails() {
-    const cars = await prisma.car.findMany();
+async function carDetails(user) {
+
+    if (!user) {
+        throw new Error("the user does not exsist");
+    }
+
+    const cars = await prisma.car.findMany({
+        where: { userId: user.id }
+    });
+
     return cars;
 }
 

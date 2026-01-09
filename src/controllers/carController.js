@@ -14,7 +14,7 @@ async function addCarController(req, res) {
 
 async function carDetailsController(req, res) {
     try {
-        const result = await carDetails()
+        const result = await carDetails(req.user)
         return res.status(201).json(result);
     } catch (error) {
         return res.status(400).json({ error: error.message });
