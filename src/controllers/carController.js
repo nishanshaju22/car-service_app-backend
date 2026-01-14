@@ -1,4 +1,4 @@
-import { addCar, carDetails, getCarById, removeCar, updateCarDetails, getCarRatings, getCarRecalls, getCarComplaints, returnColour } from "../manager/car.js";
+import { addCar, carDetails, getCarById, removeCar, updateCarDetails, getCarRatings, getCarRecalls, getCarComplaints } from "../manager/car.js";
 
 
 async function addCarController(req, res) {
@@ -93,17 +93,4 @@ async function getCarComplaintsController(req, res) {
 
 }
 
-
-async function returnColourController(req, res) {
-    const carId = req.query.carId;
-
-    try {
-        const result = await returnColour(carId);
-        return res.status(201).json(result);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-}
-
-
-export { addCarController, removeCarController, updateCarController, carDetailsController, getCarByIdController, getCarRatingsController, getCarRecallsController, getCarComplaintsController, returnColourController };
+export { addCarController, removeCarController, updateCarController, carDetailsController, getCarByIdController, getCarRatingsController, getCarRecallsController, getCarComplaintsController };
