@@ -137,8 +137,6 @@ async function updateCarDetails(user, id, make, model, year, vin, licensePlate, 
 
     const img = await fetchCarImage(make, model, year)
 
-    console.log(img)
-
     const carData = {
         userId: user.id,
         make: capitaliseWords(make) ?? carFound.make,
@@ -173,7 +171,101 @@ async function carDetails(user) {
         where: { userId: user.id }
     });
 
-    return cars;
+    let colours = {};
+    let reasons = {};
+
+    for (const car of cars) {
+
+        const status = await returnColour(car.id);
+
+        colours[car.id] = status.colour;
+        reasons[car.id] = status.reason;
+    }
+
+    return {
+        cars,
+        colours,
+        reasons
+    };
+}
+
+async function returnColour(carId) {
+
+    const car = await prisma.car.findUnique({
+        where: {id: carId}
+    });
+
+    if (!car) {
+        throw new Error("car not found");
+    }
+
+    const maintainanseRec = await prisma.maintenanceRecord.findMany({
+        where: {carId: carId}
+    });
+
+    if (maintainanseRec.length < 1 && car.currentMileage > 10000) {
+        return {
+            colour: "red",
+            reason: "Car is overdue service"
+        };
+    } else if (maintainanseRec.length < 1 && car.currentMileage < 10000 && car.currentMileage > 5000) {
+        return {
+            colour: "yellow",
+            reason: "Car almost due service"
+        };
+    } else if (maintainanseRec.length < 1) {
+        return {
+            colour: "green",
+            reason: "No serviced required"
+        };
+    }
+
+    const overdueServices = findServices(car.id, car.currentMileage);
+    const overdue = Object.keys(overdueServices).length;
+
+    if (overdue > 0) {
+        return {
+            colour: "red",
+            reason: "Car is overdue service"
+        };
+    }
+
+    for (let main of maintainanseRec) {
+        if (main.priority == "critical" && main.status == "SKIPPED") {
+            return {
+                colour: "red",
+                reason: "Car is overdue service"
+            };
+        } else if (main.priority == "recommended" && main.status == "SKIPPED") {
+            return {
+                colour: "yellow",
+                reason: "A recommended service has been skipped"
+            };
+        }
+    }
+
+    const services = await getUpcommingMaintainance(car.currentMileage, 1);
+    const serviceDueKm = services[0].kilometers;
+    
+
+    if (!serviceDueKm) {
+        return {
+            colour: "green",
+            reason: "No upcoming services"
+        };
+    }
+
+    if (serviceDueKm - car.currentMileage < 1000) {
+        return {
+            colour: "yellow",
+            reason: "Car almost due service"
+        };
+    }
+
+    return {
+        colour: "green",
+        reason: "No serviced required"
+    };
 }
 
 async function getCarById(id) {
@@ -252,77 +344,5 @@ async function getCarComplaints(id) {
     }
 
 }
-
-async function returnColour(carId) {
-
-    const car = await prisma.car.findUnique({
-        where: {id: carId}
-    });
-
-    if (!car) {
-        throw new Error("car not found");
-    }
-
-    const maintainanseRec = await prisma.maintenanceRecord.findMany({
-        where: {carId: carId}
-    });
-
-    if (maintainanseRec.length < 1 && car.currentMileage > 10000) {
-        return {
-            colour: "Red",
-            reason: "Car is overdue service"
-        };
-    } else if (maintainanseRec.length < 1 && car.currentMileage < 10000 && car.currentMileage > 5000) {
-        return {
-            colour: "Yellow",
-            reason: "Car almost due service"
-        };
-    } else if (maintainanseRec.length < 1) {
-        return {
-            colour: "Green",
-            reason: "No serviced required"
-        };
-    }
-
-    const overdueServices = findServices(car.id, car.currentMileage);
-    const overdue = Object.keys(overdueServices).length;
-
-    if (overdue > 0) {
-        return {
-            colour: "Red",
-            reason: "Car is overdue service"
-        };
-    }
-
-    for (let main of maintainanseRec) {
-        if (main.priority == "critical" && main.status == "SKIPPED") {
-            return {
-                colour: "Red",
-                reason: "Car is overdue service"
-            };
-        } else if (main.priority == "recommended" && main.status == "SKIPPED") {
-            return {
-                colour: "Yellow",
-                reason: "A recommended service has been skipped"
-            };
-        }
-    }
-
-    const services = getUpcommingMaintainance(car.currentMileage, 1);
-    const serviceDueKm = services[0].kilometers;
-
-    if (serviceDueKm - car.currentMileage < 1000) {
-        return {
-            colour: "Yellow",
-            reason: "Car almost due service"
-        };
-    }
-
-    return {
-        colour: "Green",
-        reason: "No serviced required"
-    };
-}
-
 
 export { addCar, removeCar, updateCarDetails, carDetails, getCarById, getCarRatings, getCarRecalls, getCarComplaints, returnColour }
