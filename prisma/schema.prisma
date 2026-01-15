@@ -42,6 +42,7 @@ model Car {
     
     currentMileage   Int       @default(0)
     mileageUnit      String    @default("km")
+    predictor        Int       @default(0)
     
     purchaseDate     DateTime?
     purchasePrice    Float?
