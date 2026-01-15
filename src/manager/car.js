@@ -174,20 +174,70 @@ async function carDetails(user) {
     let colours = {};
     let reasons = {};
 
+    let carsList = [];
+
     for (const car of cars) {
 
         const status = await returnColour(car.id);
+
+        const newMileage = calculateNewMileage(car);
+        if (newMileage !== 0) {
+            await updateMileage(car.id, newMileage);
+        }
+
+        carsList.push(car)
 
         colours[car.id] = status.colour;
         reasons[car.id] = status.reason;
     }
 
     return {
-        cars,
+        cars: carsList,
         colours,
         reasons
     };
 }
+
+function calculateNewMileage(car) {
+    if (!car) {
+        throw new Error("the car passed is null");
+    }
+
+    const currMileageDate = new Date(car.updatedAt);
+    const currDate = new Date();
+
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const diff = Math.floor((currDate - currMileageDate) / MS_PER_DAY)
+    const newMileage = car.currentMileage + (car.predictor * diff)
+
+    return newMileage;
+}
+
+async function updateMileage(carId, newMileage) {
+    
+    if (!carId) {
+        throw new Error("the car id is null");
+    }
+
+    const data = {
+        currentMileage: newMileage,
+        updatedAt: new Date()
+    }
+
+    const car = await prisma.car.update({
+        where: {id: carId},
+        data: data
+    });
+
+    if (!car) {
+        throw new Error("the update did not work");
+    }
+
+    console.log(car);
+
+    return car;
+}
+
 
 async function returnColour(carId) {
 
@@ -345,4 +395,27 @@ async function getCarComplaints(id) {
 
 }
 
-export { addCar, removeCar, updateCarDetails, carDetails, getCarById, getCarRatings, getCarRecalls, getCarComplaints, returnColour }
+async function addPredictor(carId, predictor) {
+    
+    if (!carId) {
+        throw new Error("car id is empty");
+    }
+
+    const data = {
+        predictor
+    }
+
+    const carData = await prisma.car.update({
+        where: {id: carId},
+        data: data
+    })
+
+
+    if (!carData) {
+        throw new Error("the update was not completed");
+    }
+
+    return carData;
+}
+
+export { addCar, addPredictor, removeCar, updateCarDetails, carDetails, getCarById, getCarRatings, getCarRecalls, getCarComplaints, returnColour }
