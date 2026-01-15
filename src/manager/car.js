@@ -331,14 +331,14 @@ async function getCarComplaints(id) {
     const car = await getCarById(id);
 
     const make = car.make;
-    const model = car.model;
+    const model = car.model.split(' ')[0];
     const year = car.year;
 
     try {
         const response = await fetch(`https://api.nhtsa.gov/complaints/complaintsByVehicle?make=${make}&model=${model}&modelYear=${year}`);
         const data = await response.json();
 
-        return data
+        return data.results
     } catch (error) {
         console.error('Error fetching data:', error);
     }
